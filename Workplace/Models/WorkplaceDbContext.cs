@@ -8,7 +8,7 @@ namespace Workplace.Models
 {
     public class WorkplaceDbContext: DbContext
     {
-        //public DbSet<GraphicsCard> GraphicsCards { get; set; }
+        public DbSet<GraphicsCard> GraphicsCards { get; set; }
         public DbSet<Disk> Disks { get; set; }
         public DbSet<Motherboard> Motherboards { get; set; }
         public DbSet<Memory> Memories { get; set; }
@@ -17,17 +17,17 @@ namespace Workplace.Models
         public WorkplaceDbContext()
         {
 
-            //Database.EnsureDeleted();
+            Database.EnsureDeleted();
             if (Database.EnsureCreated())
             {
-               /* List<GraphicsCard> cards = new List<GraphicsCard> 
-                { 
-                new GraphicsCard {Frequency=1800, Volume=2048, Arhitecture=GraphicsCardArchitecture.Pascal},
-                new GraphicsCard {Frequency=1866, Volume=2048, Arhitecture=GraphicsCardArchitecture.RDNA2},
-                new GraphicsCard {Frequency=1600, Volume=1024, Arhitecture=GraphicsCardArchitecture.Maxwell1},
-                new GraphicsCard {Frequency=1850, Volume=4096, Arhitecture=GraphicsCardArchitecture.Pascal},
+                List<GraphicsCard> cards = new List<GraphicsCard>
+                {
+                new GraphicsCard {Frequency=1800, Volume=2048, Architecture=GraphicsCardArchitecture.Pascal},
+                new GraphicsCard {Frequency=1866, Volume=2048, Architecture=GraphicsCardArchitecture.RDNA2},
+                new GraphicsCard {Frequency=1600, Volume=1024, Architecture=GraphicsCardArchitecture.Maxwell1},
+                new GraphicsCard {Frequency=1850, Volume=4096, Architecture=GraphicsCardArchitecture.Pascal},
                 };
-                //AddRange(cards);*/
+                AddRange(cards);
 
                 List<Disk> disks = new List<Disk>
                 {
