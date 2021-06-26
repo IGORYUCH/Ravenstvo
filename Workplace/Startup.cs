@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Workplace.Models;
 
 namespace Workplace
 {
@@ -34,6 +35,9 @@ namespace Workplace
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                DbInitializer initializer = new DbInitializer(new WorkplaceDbContext());
+                initializer.Initialize();
             }
 
             app.UseHttpsRedirection();
