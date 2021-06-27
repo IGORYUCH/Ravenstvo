@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Workplace.Models;
 
 namespace Workplace.Controllers
@@ -22,7 +23,11 @@ namespace Workplace.Controllers
         public IEnumerable<SystemUnit> GetSystemUnits()
         {
             WorkplaceDbContext context = new WorkplaceDbContext();
-            return context.SystemUnits;
+            return context.SystemUnits.Include("Motherboard")
+                .Include("Disk")
+                .Include("Memory")
+                .Include("Processor")
+                ;
         }
 
         [HttpGet("{id}")]

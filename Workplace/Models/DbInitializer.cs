@@ -79,6 +79,20 @@ namespace Workplace.Models
                 };
                 context.AddRange(systemUnits);
 
+                List<Monitor> monitors = new List<Monitor>
+                {
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, SystemUnit=systemUnits[0]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, SystemUnit=systemUnits[1]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, SystemUnit=systemUnits[2]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, SystemUnit=systemUnits[2]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, SystemUnit=systemUnits[3]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, SystemUnit=systemUnits[4]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, SystemUnit=systemUnits[4]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, SystemUnit=systemUnits[5]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, SystemUnit=systemUnits[5]},
+                };
+                context.AddRange(monitors);
+
                 context.SaveChanges();
             }
         }
