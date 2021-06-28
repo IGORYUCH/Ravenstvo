@@ -17,7 +17,10 @@ namespace Workplace.Models
         public DbSet<Processor> Processors { get; set; }
         public DbSet<SystemUnit> SystemUnits { get; set; }
         public DbSet<Monitor> Monitors { get; set; }
+        public DbSet<Mouse> Mice { get; set; }
+        public DbSet<Keyboard> Keyboards { get; set; }
         public DbSet<Computer> Computers { get; set; }
+        public DbSet<Workplace_> Workplaces { get; set; }
         public WorkplaceDbContext()
         {
         }

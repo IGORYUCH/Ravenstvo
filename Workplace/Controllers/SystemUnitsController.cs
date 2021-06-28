@@ -9,7 +9,7 @@ using Workplace.Models;
 namespace Workplace.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class SystemUnitsController: ControllerBase
     {
         WorkplaceDbContext context;
@@ -23,7 +23,8 @@ namespace Workplace.Controllers
         public IEnumerable<SystemUnit> GetSystemUnits()
         {
             WorkplaceDbContext context = new WorkplaceDbContext();
-            return context.SystemUnits.Include("Motherboard")
+            return context.SystemUnits
+                .Include("Motherboard")
                 .Include("Disk")
                 .Include("Memory")
                 .Include("Processor")

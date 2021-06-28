@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace Workplace.Models
 {
-    public class Disk
+    public class Mouse
     {
         public int Id { get; set; }
-        public int Volume { get; set; }
-        public int RPM { get; set; }
+        public string ConnectType { get; set; }
     }
 }
-//[JsonIgnore]

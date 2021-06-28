@@ -12,7 +12,7 @@ namespace Workplace.Models
         public int ResolutionX { get; set; }
         public int ResolutionY { get; set; }
         public int Frequency { get; set; }
-        [ForeignKey("SystemUnitId")]
-        public SystemUnit SystemUnit { get; set; }
+        [ForeignKey("ComputerId")]
+        public Computer Computer { get; set; }
     }
 }

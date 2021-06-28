@@ -9,7 +9,7 @@ using Workplace.Models;
 
 namespace Workplace.Controllers
 {
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class ComputersController : ControllerBase
     {
@@ -22,16 +22,71 @@ namespace Workplace.Controllers
 
         // GET: api/Computers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Computer>>> GetComputers()
+        public async Task<ActionResult<IEnumerable<Object>>> GetComputers()
         {
-            return await _context.Computers.ToListAsync();
+            IEnumerable<Computer> computers = _context.Computers.Include(c => c.SystemUnit).Include(c => c.Monitors);
+           /* return await _context.Computers
+             .Include(c => c.SystemUnit.Disk)
+             .Include(c => c.SystemUnit.Motherboard)
+             .Include(c => c.SystemUnit.Processor)
+             .Include(c => c.SystemUnit.Memory)
+             .Include(c => c.Monitors)
+             .ToListAsync();*/
+
+            //ругается на циклическую зависимость
+            return await _context.Computers.Select(c => new 
+            {
+                Id = c.Id,
+                SystemUnit = new {
+                    Id = c.SystemUnit.Id,
+                    Motherboard = c.SystemUnit.Motherboard,
+                    Processor = c.SystemUnit.Processor,
+                    Disk = c.SystemUnit.Disk,
+                    Memory = c.SystemUnit.Memory
+                },
+                Keyboard = c.Keyboard,
+                Mouse = c.Mouse,
+                Monitors = c.Monitors.Select(m => new 
+                {
+                    Id = m.Id,
+                    Frequency = m.Frequency,
+                    ResolutionX = m.ResolutionX,
+                    ResolutionY = m.ResolutionY
+                }
+                    ).ToList()
+            }).ToListAsync();
+
         }
 
         // GET: api/Computers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Computer>> GetComputer(int id)
+        public async Task<ActionResult<Object>> GetComputer(int id)
         {
-            var computer = await _context.Computers.FindAsync(id);
+            var computer = await _context.Computers.Select(
+                c => new 
+                {
+                    Id = c.Id,
+                    SystemUnit = new
+                    {
+                        Id = c.SystemUnit.Id,
+                        Motherboard = c.SystemUnit.Motherboard,
+                        Processor = c.SystemUnit.Processor,
+                        Disk = c.SystemUnit.Disk,
+                        Memory = c.SystemUnit.Memory
+                    },
+                    Keyboard = c.Keyboard,
+                    Mouse = c.Mouse,
+                    Monitors = c.Monitors.Select(m => new
+                    {
+                        Id = m.Id,
+                        Frequency = m.Frequency,
+                        ResolutionX = m.ResolutionX,
+                        ResolutionY = m.ResolutionY
+                    }
+                    ).ToList()
+                }
+                )
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (computer == null)
             {
