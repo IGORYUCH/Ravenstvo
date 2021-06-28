@@ -31,6 +31,20 @@ namespace Workplace.Controllers
                     Frequency = m.Frequency,
                     ResolutionX = m.ResolutionX,
                     ResolutionY = m.ResolutionY,
+                    Computer = new
+                    {
+                        Id = m.Computer.Id,
+                        SystemUnit = new 
+                        { 
+                            Id = m.Computer.SystemUnit.Id,
+                            Disk = m.Computer.SystemUnit.Disk,
+                            Processor = m.Computer.SystemUnit.Processor,
+                            Motherboard = m.Computer.SystemUnit.Motherboard,
+
+                        },
+                        Keyboard = m.Computer.Keyboard,
+                        Mouse = m.Computer.Mouse
+                    }
                 }
                 ).ToListAsync();
         }
@@ -46,6 +60,20 @@ namespace Workplace.Controllers
                      Frequency = m.Frequency,
                      ResolutionX = m.ResolutionX,
                      ResolutionY = m.ResolutionY,
+                     Computer = new
+                     {
+                         Id = m.Computer.Id,
+                         SystemUnit = new
+                         {
+                             Id = m.Computer.SystemUnit.Id,
+                             Disk = m.Computer.SystemUnit.Disk,
+                             Processor = m.Computer.SystemUnit.Processor,
+                             Motherboard = m.Computer.SystemUnit.Motherboard,
+
+                         },
+                         Keyboard = m.Computer.Keyboard,
+                         Mouse = m.Computer.Mouse
+                     }
                  }
                 ).FirstOrDefaultAsync(m => m.Id == id);
 

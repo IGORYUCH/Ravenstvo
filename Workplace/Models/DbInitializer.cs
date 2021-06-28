@@ -102,30 +102,9 @@ namespace Workplace.Models
                 };
                 context.AddRange(mice);
 
-                List<Monitor> monitors = new List<Monitor>
-                {
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
-                };
-                context.AddRange(monitors);
-/*
-                Computer computer1 = new Computer { SystemUnit = systemUnits[0], Keyboard = keyboards[0], Mouse = mice[0] };
-                Computer computer2 = new Computer { SystemUnit = systemUnits[1], Keyboard = keyboards[1], Mouse = mice[1] };
-                Computer computer3 = new Computer { SystemUnit = systemUnits[2], Keyboard = keyboards[2], Mouse = mice[2] };
-                Computer computer4 = new Computer { SystemUnit = systemUnits[3], Keyboard = keyboards[3], Mouse = mice[3] };
-                Computer computer5 = new Computer { SystemUnit = systemUnits[4], Keyboard = keyboards[4], Mouse = mice[4] };
-                Computer computer6 = new Computer { SystemUnit = systemUnits[5], Keyboard = keyboards[5], Mouse = mice[5] };
-*/
                 List<Computer> computers = new List<Computer>
                 {
-                    new Computer {SystemUnit=systemUnits[0], Keyboard=keyboards[0], Mouse=mice[0] },
+                    new Computer {SystemUnit=systemUnits[0], Keyboard=keyboards[0], Mouse=mice[0]},
                     new Computer {SystemUnit=systemUnits[1], Keyboard=keyboards[1], Mouse=mice[1] },
                     new Computer {SystemUnit=systemUnits[2], Keyboard=keyboards[2], Mouse=mice[2] },
                     new Computer {SystemUnit=systemUnits[3], Keyboard=keyboards[3], Mouse=mice[3] },
@@ -134,18 +113,19 @@ namespace Workplace.Models
                 };
                 context.AddRange(computers);
 
-                Computer computer1 = new Computer { SystemUnit = systemUnits[0], Keyboard = keyboards[0], Mouse = mice[0] };
-                context.Add(computer1);
-                Monitor monitor1 = new Monitor { Frequency = 60, ResolutionX = 1366, ResolutionY = 768 };
-                context.Add(monitor1);
-
-/*
-                computer1.ComputerMonitors.Add(new ComputerMonitor { Computer = computer1, Monitor = monitors[2] });
-                //context.SaveChanges();
-                computer1.ComputerMonitors.Add(new ComputerMonitor { Computer = computer1, Monitor = monitor1 });*/
-                ComputerMonitor computerMonitor1 = new ComputerMonitor { Computer = computer1, Monitor = monitor1 };
-                ComputerMonitor computerMonitor2 = new ComputerMonitor { Computer = computer1, Monitor = monitor1 };
-                context.AddRange(computerMonitor1, computerMonitor2);
+                List<Monitor> monitors = new List<Monitor>
+                {
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[0]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[1]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[2]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[2]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[3]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[4]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[4]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[5]},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[5]},
+                };
+                context.AddRange(monitors);
 
                 List<Workplace_> workplaces = new List<Workplace_>
                 {
