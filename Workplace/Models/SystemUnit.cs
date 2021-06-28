@@ -10,13 +10,13 @@ namespace Workplace.Models
     public class SystemUnit
     {
         public int Id { get; set; }
-        [ForeignKey("MotherboardId")]
+        public int MotherboardId { get; set; }
         public Motherboard Motherboard { get; set; }
-        [ForeignKey("ProcessorId")]
+        public int ProcessorId { get; set; }
         public Processor Processor { get; set; }
-        [ForeignKey("DiskId")]
+        public int DiskId { get; set; }
         public Disk Disk { get; set; }
-        [ForeignKey("MemoryId")]
+        public int MemoryId { get; set; }
         public Memory Memory { get; set; }
     }
 }

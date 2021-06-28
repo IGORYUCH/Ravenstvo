@@ -70,7 +70,7 @@ namespace Workplace.Models
 
                 List<SystemUnit> systemUnits = new List<SystemUnit>
                 {
-                    new SystemUnit {Disk=null, Memory=memories[3], Motherboard=motherboards[4], Processor=processors[2]},
+                    new SystemUnit {Disk=disks[3], Memory=memories[3], Motherboard=motherboards[4], Processor=processors[2]},
                     new SystemUnit {Disk=disks[1], Memory=memories[2], Motherboard=motherboards[4], Processor=processors[3]},
                     new SystemUnit {Disk=disks[2], Memory=memories[3], Motherboard=motherboards[4], Processor=processors[3]},
                     new SystemUnit {Disk=disks[0], Memory=memories[2], Motherboard=motherboards[1], Processor=processors[2]},
@@ -134,10 +134,10 @@ namespace Workplace.Models
                     new Workplace_{Computer=computers[2]},
                     new Workplace_{Computer=computers[3]},
                     new Workplace_{Computer=computers[4]},
-                    new Workplace_{Computer=computers[5]},
+                    new Workplace_{Computer=computers[5]}
                 };
                 context.AddRange(workplaces);
-                
+
                 context.SaveChanges();
             }
         }

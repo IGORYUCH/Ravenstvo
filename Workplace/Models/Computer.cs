@@ -10,12 +10,13 @@ namespace Workplace.Models
     public class Computer
     {
         public int Id { get; set; }
-        [ForeignKey("SystemUnitId")]
+        public int SystemUnitId { get; set; }
         public SystemUnit SystemUnit { get; set; }
-        [ForeignKey("KeyboardId")]
+        public int KeyboardId { get; set; }
         public Keyboard Keyboard { get; set; }
-        [ForeignKey("MouseId")]
+        public int MouseId { get; set; }
         public Mouse Mouse { get; set; }
+
         public List<Monitor> Monitors { get; set; }
     }
 }

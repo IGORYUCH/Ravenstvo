@@ -2,47 +2,118 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Workplace.Models;
 
 namespace Workplace.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class SystemUnitsController: ControllerBase
+    [ApiController]
+    public class SystemUnitsController : ControllerBase
     {
-        WorkplaceDbContext context;
+        private readonly WorkplaceDbContext _context;
 
         public SystemUnitsController()
         {
-            context = new WorkplaceDbContext();
+            _context = new WorkplaceDbContext();
         }
 
+        // GET: api/SystemUnits
         [HttpGet]
-        public IEnumerable<SystemUnit> GetSystemUnits()
+        public async Task<ActionResult<IEnumerable<SystemUnit>>> GetSystemUnits()
         {
-            WorkplaceDbContext context = new WorkplaceDbContext();
-            return context.SystemUnits
+            return await _context.SystemUnits
                 .Include("Motherboard")
+                .Include("Processor")
                 .Include("Disk")
                 .Include("Memory")
-                .Include("Processor")
-                ;
+                .ToListAsync();
         }
 
+        // GET: api/SystemUnits/5
         [HttpGet("{id}")]
-        public ActionResult<SystemUnit> GetSystemUnit(int id)
+        public async Task<ActionResult<SystemUnit>> GetSystemUnit(int id)
         {
-            SystemUnit systemUnit = context.SystemUnits.Find(id);
-            if (systemUnit != null)
+            var systemUnit = await _context.SystemUnits
+                .Include("Motherboard")
+                .Include("Processor")
+                .Include("Disk")
+                .Include("Memory")
+                .FirstOrDefaultAsync(su => su.Id == id);
+
+            if (systemUnit == null)
             {
-                return systemUnit;
+                return NotFound();
             }
-            else
+
+            return systemUnit;
+        }
+
+        // PUT: api/SystemUnits/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutSystemUnit(int id, SystemUnit systemUnit)
+        {
+            if (id != systemUnit.Id)
             {
-                return NotFound(String.Format("The system unit with id {0} not found", id));
+                return BadRequest();
             }
+
+            _context.Entry(systemUnit).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SystemUnitExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // POST: api/SystemUnits
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<SystemUnit>> PostSystemUnit(SystemUnit systemUnit)
+        {
+            _context.SystemUnits.Add(systemUnit);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetSystemUnit", new { id = systemUnit.Id }, systemUnit);
+        }
+
+        // DELETE: api/SystemUnits/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<SystemUnit>> DeleteSystemUnit(int id)
+        {
+            var systemUnit = await _context.SystemUnits.FindAsync(id);
+            if (systemUnit == null)
+            {
+                return NotFound();
+            }
+
+            _context.SystemUnits.Remove(systemUnit);
+            await _context.SaveChangesAsync();
+
+            return systemUnit;
+        }
+
+        private bool SystemUnitExists(int id)
+        {
+            return _context.SystemUnits.Any(e => e.Id == id);
         }
     }
 }
