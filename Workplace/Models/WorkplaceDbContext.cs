@@ -24,6 +24,23 @@ namespace Workplace.Models
         public WorkplaceDbContext()
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ComputerMonitor>()
+                .HasKey(t => new { t.ComputerId, t.MonitorId });
+
+            modelBuilder.Entity<ComputerMonitor>()
+                .HasOne(cm => cm.Computer)
+                .WithMany(c => c.ComputerMonitors)
+                .HasForeignKey(cm => cm.ComputerId);
+                
+            modelBuilder.Entity<ComputerMonitor>()
+                .HasOne(cm => cm.Monitor)
+                .WithMany(m => m.ComputerMonitors)
+                .HasForeignKey(cm => cm.MonitorId);
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var builder = new ConfigurationBuilder();

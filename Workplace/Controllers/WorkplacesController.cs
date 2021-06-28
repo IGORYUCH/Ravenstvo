@@ -41,14 +41,14 @@ namespace Workplace.Controllers
                         },
                         Keyboard = w.Computer.Keyboard,
                         Mouse = w.Computer.Mouse,
-                        Monitors = w.Computer.Monitors.Select(m => new
+                       /* Monitors = w.Computer.Monitors.Select(m => new
                         {
                             Id = m.Id,
                             Frequency = m.Frequency,
                             ResolutionX = m.ResolutionX,
                             ResolutionY = m.ResolutionY
                         }
-                        ).ToList()
+                        ).ToList()*/
                    }
                 }
                 ).ToListAsync();
@@ -75,14 +75,14 @@ namespace Workplace.Controllers
                         },
                         Keyboard = w.Computer.Keyboard,
                         Mouse = w.Computer.Mouse,
-                        Monitors = w.Computer.Monitors.Select(m => new
+                        /*Monitors = w.Computer.Monitors.Select(m => new
                         {
                             Id = m.Id,
                             Frequency = m.Frequency,
                             ResolutionX = m.ResolutionX,
                             ResolutionY = m.ResolutionY
                         }
-                        ).ToList()
+                        ).ToList()*/
                     }
                 }
                 ).FirstOrDefaultAsync(w => w.Id == id);

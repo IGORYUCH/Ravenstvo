@@ -24,7 +24,7 @@ namespace Workplace.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Object>>> GetComputers()
         {
-            IEnumerable<Computer> computers = _context.Computers.Include(c => c.SystemUnit).Include(c => c.Monitors);
+            //IEnumerable<Computer> computers = _context.Computers.Include(c => c.SystemUnit).Include(c => c.Monitors);
            /* return await _context.Computers
              .Include(c => c.SystemUnit.Disk)
              .Include(c => c.SystemUnit.Motherboard)
@@ -46,14 +46,14 @@ namespace Workplace.Controllers
                 },
                 Keyboard = c.Keyboard,
                 Mouse = c.Mouse,
-                Monitors = c.Monitors.Select(m => new 
+               /* Monitors = c.Monitors.Select(m => new 
                 {
                     Id = m.Id,
                     Frequency = m.Frequency,
                     ResolutionX = m.ResolutionX,
                     ResolutionY = m.ResolutionY
                 }
-                    ).ToList()
+                    ).ToList()*/
             }).ToListAsync();
 
         }
@@ -76,14 +76,14 @@ namespace Workplace.Controllers
                     },
                     Keyboard = c.Keyboard,
                     Mouse = c.Mouse,
-                    Monitors = c.Monitors.Select(m => new
+                  /*  Monitors = c.Monitors.Select(m => new
                     {
                         Id = m.Id,
                         Frequency = m.Frequency,
                         ResolutionX = m.ResolutionX,
                         ResolutionY = m.ResolutionY
                     }
-                    ).ToList()
+                    ).ToList()*/
                 }
                 )
                 .FirstOrDefaultAsync(c => c.Id == id);
