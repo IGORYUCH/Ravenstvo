@@ -10,8 +10,8 @@ namespace Workplace.Models
     public class SystemUnit
     {
         public int Id { get; set; }
-        public int MotherboardId { get; set; }
-        public Motherboard Motherboard { get; set; }
+        public int? GraphicsCardId { get; set; }
+        public GraphicsCard GraphicsCard { get; set; }
         public int ProcessorId { get; set; }
         public Processor Processor { get; set; }
         public int DiskId { get; set; }

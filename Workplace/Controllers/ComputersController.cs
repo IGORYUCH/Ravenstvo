@@ -28,7 +28,7 @@ namespace Workplace.Controllers
             return await _context.Computers
                 .Include(c => c.SystemUnit).ThenInclude(su => su.Disk)
                 .Include(c => c.SystemUnit).ThenInclude(su => su.Processor)
-                .Include(c => c.SystemUnit).ThenInclude(su => su.Motherboard)
+                .Include(c => c.SystemUnit).ThenInclude(su => su.GraphicsCard)
                 .Include(c => c.SystemUnit).ThenInclude(su => su.Memory)
                 .Include(c => c.Mouse)
                 .Include(c => c.Keyboard)
@@ -43,7 +43,7 @@ namespace Workplace.Controllers
             var computer = await _context.Computers
                 .Include(c => c.SystemUnit).ThenInclude(su => su.Disk)
                 .Include(c => c.SystemUnit).ThenInclude(su => su.Processor)
-                .Include(c => c.SystemUnit).ThenInclude(su => su.Motherboard)
+                .Include(c => c.SystemUnit).ThenInclude(su => su.GraphicsCard)
                 .Include(c => c.SystemUnit).ThenInclude(su => su.Memory)
                 .Include(c => c.Mouse)
                 .Include(c => c.Keyboard)
@@ -69,7 +69,7 @@ namespace Workplace.Controllers
                 return BadRequest();
             }
 
-            Computer computer = await _context.Computers.FindAsync(id);
+            Computer computer = await _context.Computers.Include(c=>c.Monitors).FirstOrDefaultAsync(c=> c.Id==id);
             if (computer == null)
             {
                 return NotFound($"Computer with id {id} not found");
@@ -113,7 +113,7 @@ namespace Workplace.Controllers
             }
 
             return NoContent();
-        }
+         }
 
         // POST: api/Computers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for

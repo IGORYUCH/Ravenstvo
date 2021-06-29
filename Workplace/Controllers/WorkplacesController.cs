@@ -25,7 +25,7 @@ namespace Workplace.Controllers
         public async Task<ActionResult<IEnumerable<Workplace_>>> GetWorkplaces()
         {
             return await _context.Workplaces
-                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Motherboard)
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.GraphicsCard)
                 .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Processor)
                 .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Memory)
                 .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Disk)
@@ -40,7 +40,7 @@ namespace Workplace.Controllers
         public async Task<ActionResult<Workplace_>> GetWorkplace(int id)
         {
             Workplace_ workplace = await _context.Workplaces
-                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Motherboard)
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.GraphicsCard)
                 .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Processor)
                 .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Memory)
                 .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Disk)

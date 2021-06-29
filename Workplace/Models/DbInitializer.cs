@@ -18,14 +18,6 @@ namespace Workplace.Models
             context.Database.EnsureDeleted();
             if (context.Database.EnsureCreated())
             {
-                List<GraphicsCard> cards = new List<GraphicsCard>
-                {
-                new GraphicsCard {Frequency=1800, Volume=2048},
-                new GraphicsCard {Frequency=1866, Volume=2048},
-                new GraphicsCard {Frequency=1600, Volume=1024},
-                new GraphicsCard {Frequency=1850, Volume=4096},
-                };
-                context.AddRange(cards);
 
                 List<Disk> disks = new List<Disk>
                 {
@@ -37,15 +29,6 @@ namespace Workplace.Models
                 };
                 context.AddRange(disks);
 
-                List<Motherboard> motherboards = new List<Motherboard>
-                {
-                    new Motherboard{ },
-                    new Motherboard{ },
-                    new Motherboard{ },
-                    new Motherboard{ },
-                    new Motherboard{ },
-                };
-                context.AddRange(motherboards);
 
                 List<Memory> memories = new List<Memory>
                 {
@@ -68,14 +51,22 @@ namespace Workplace.Models
                 };
                 context.AddRange(processors);
 
+                List<GraphicsCard> graphicsCards = new List<GraphicsCard>
+                {
+                    new GraphicsCard{Volume=2048, Frequency=1750},
+                    new GraphicsCard{Volume=4096, Frequency=1850},
+                    new GraphicsCard{Volume=4096, Frequency=1850},
+                };
+                context.AddRange(graphicsCards);
+
                 List<SystemUnit> systemUnits = new List<SystemUnit>
                 {
-                    new SystemUnit {Disk=disks[3], Memory=memories[3], Motherboard=motherboards[4], Processor=processors[2]},
-                    new SystemUnit {Disk=disks[1], Memory=memories[2], Motherboard=motherboards[4], Processor=processors[3]},
-                    new SystemUnit {Disk=disks[2], Memory=memories[3], Motherboard=motherboards[4], Processor=processors[3]},
-                    new SystemUnit {Disk=disks[0], Memory=memories[2], Motherboard=motherboards[1], Processor=processors[2]},
-                    new SystemUnit {Disk=disks[1], Memory=memories[3], Motherboard=motherboards[2], Processor=processors[1]},
-                    new SystemUnit {Disk=disks[2], Memory=memories[0], Motherboard=motherboards[3], Processor=processors[0]},
+                    new SystemUnit {Disk=disks[3], Memory=memories[3], GraphicsCard=graphicsCards[0], Processor=processors[2]},
+                    new SystemUnit {Disk=disks[1], Memory=memories[2], GraphicsCard=null, Processor=processors[3]},
+                    new SystemUnit {Disk=disks[2], Memory=memories[3], GraphicsCard=null, Processor=processors[3]},
+                    new SystemUnit {Disk=disks[0], Memory=memories[2], GraphicsCard=graphicsCards[1], Processor=processors[2]},
+                    new SystemUnit {Disk=disks[1], Memory=memories[3], GraphicsCard=null, Processor=processors[1]},
+                    new SystemUnit {Disk=disks[2], Memory=memories[0], GraphicsCard=graphicsCards[2], Processor=processors[0]},
                 };
                 context.AddRange(systemUnits);
 
@@ -88,7 +79,7 @@ namespace Workplace.Models
                     new Keyboard {ConnectType="USB", HasNumpad=true, Keys=100},
                     new Keyboard {ConnectType="Bluethooth", HasNumpad=false, Keys=87},
                     new Keyboard {ConnectType="PS/2", HasNumpad=true, Keys=105},
-                    new Keyboard {ConnectType="TESTER", HasNumpad=true, Keys=105},
+                    new Keyboard {ConnectType="TEST", HasNumpad=true, Keys=105},
                 };
                 context.AddRange(keyboards);
 
@@ -100,7 +91,7 @@ namespace Workplace.Models
                     new Mouse {ConnectType="Wireless"},
                     new Mouse {ConnectType="USB"},
                     new Mouse {ConnectType="Bluethooth"},
-                    new Mouse {ConnectType="TESTER"},
+                    new Mouse {ConnectType="TEST"},
                 };
                 context.AddRange(mice);
 

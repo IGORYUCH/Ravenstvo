@@ -11,48 +11,48 @@ namespace Workplace.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MotherboardsController : ControllerBase
+    public class GraphicsCardsController : ControllerBase
     {
         private readonly WorkplaceDbContext _context;
 
-        public MotherboardsController()
+        public GraphicsCardsController()
         {
             _context = new WorkplaceDbContext();
         }
 
-        // GET: api/Motherboards
+        // GET: api/GraphicsCards
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Motherboard>>> GetMotherboards()
+        public async Task<ActionResult<IEnumerable<GraphicsCard>>> GetGraphicsCards()
         {
-            return await _context.Motherboards.ToListAsync();
+            return await _context.GraphicsCards.ToListAsync();
         }
 
-        // GET: api/Motherboards/5
+        // GET: api/GraphicsCards/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Motherboard>> GetMotherboard(int id)
+        public async Task<ActionResult<GraphicsCard>> GetGraphicsCard(int id)
         {
-            var motherboard = await _context.Motherboards.FindAsync(id);
+            var graphicsCard = await _context.GraphicsCards.FindAsync(id);
 
-            if (motherboard == null)
+            if (graphicsCard == null)
             {
                 return NotFound();
             }
 
-            return motherboard;
+            return graphicsCard;
         }
 
-        // PUT: api/Motherboards/5
+        // PUT: api/GraphicsCards/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMotherboard(int id, Motherboard motherboard)
+        public async Task<IActionResult> PutGraphicsCard(int id, GraphicsCard graphicsCard)
         {
-            if (id != motherboard.Id)
+            if (id != graphicsCard.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(motherboard).State = EntityState.Modified;
+            _context.Entry(graphicsCard).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Workplace.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MotherboardExists(id))
+                if (!GraphicsCardExists(id))
                 {
                     return NotFound();
                 }
@@ -73,37 +73,37 @@ namespace Workplace.Controllers
             return NoContent();
         }
 
-        // POST: api/Motherboards
+        // POST: api/GraphicsCards
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Motherboard>> PostMotherboard(Motherboard motherboard)
+        public async Task<ActionResult<GraphicsCard>> PostGraphicsCard(GraphicsCard graphicsCard)
         {
-            _context.Motherboards.Add(motherboard);
+            _context.GraphicsCards.Add(graphicsCard);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetMotherboard", new { id = motherboard.Id }, motherboard);
+            return CreatedAtAction("GetGraphicsCard", new { id = graphicsCard.Id }, graphicsCard);
         }
 
-        // DELETE: api/Motherboards/5
+        // DELETE: api/GraphicsCards/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Motherboard>> DeleteMotherboard(int id)
+        public async Task<ActionResult<GraphicsCard>> DeleteGraphicsCard(int id)
         {
-            var motherboard = await _context.Motherboards.FindAsync(id);
-            if (motherboard == null)
+            var graphicsCard = await _context.GraphicsCards.FindAsync(id);
+            if (graphicsCard == null)
             {
                 return NotFound();
             }
 
-            _context.Motherboards.Remove(motherboard);
+            _context.GraphicsCards.Remove(graphicsCard);
             await _context.SaveChangesAsync();
 
-            return motherboard;
+            return graphicsCard;
         }
 
-        private bool MotherboardExists(int id)
+        private bool GraphicsCardExists(int id)
         {
-            return _context.Motherboards.Any(e => e.Id == id);
+            return _context.GraphicsCards.Any(e => e.Id == id);
         }
     }
 }

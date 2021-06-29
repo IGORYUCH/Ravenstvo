@@ -12,7 +12,6 @@ namespace Workplace.Models
     {
         public DbSet<GraphicsCard> GraphicsCards { get; set; }
         public DbSet<Disk> Disks { get; set; }
-        public DbSet<Motherboard> Motherboards { get; set; }
         public DbSet<Memory> Memories { get; set; }
         public DbSet<Processor> Processors { get; set; }
         public DbSet<SystemUnit> SystemUnits { get; set; }
