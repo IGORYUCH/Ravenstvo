@@ -11,6 +11,5 @@ namespace Workplace.Models
         public int Frequency { get; set; }
         public int Cores { get; set; }
         public int Threads { get; set; }
-        public ProcessorArchitecture Architecture { get; set; }
     }
 }

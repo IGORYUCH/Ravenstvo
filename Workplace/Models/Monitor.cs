@@ -12,7 +12,5 @@ namespace Workplace.Models
         public int ResolutionX { get; set; }
         public int ResolutionY { get; set; }
         public int Frequency { get; set; }
-        public int ComputerId { get; set; }
-        public Computer Computer { get; set; }
     }
 }

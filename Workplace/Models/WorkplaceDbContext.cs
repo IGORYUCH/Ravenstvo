@@ -24,6 +24,7 @@ namespace Workplace.Models
         public WorkplaceDbContext()
         {
         }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var builder = new ConfigurationBuilder();

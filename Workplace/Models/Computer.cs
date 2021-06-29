@@ -16,7 +16,10 @@ namespace Workplace.Models
         public Keyboard Keyboard { get; set; }
         public int MouseId { get; set; }
         public Mouse Mouse { get; set; }
-
         public List<Monitor> Monitors { get; set; }
+        public Computer()
+        {
+            Monitors = new List<Monitor>();
+        }
     }
 }

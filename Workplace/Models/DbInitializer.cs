@@ -20,10 +20,10 @@ namespace Workplace.Models
             {
                 List<GraphicsCard> cards = new List<GraphicsCard>
                 {
-                new GraphicsCard {Frequency=1800, Volume=2048, Architecture=GraphicsCardArchitecture.Pascal},
-                new GraphicsCard {Frequency=1866, Volume=2048, Architecture=GraphicsCardArchitecture.RDNA2},
-                new GraphicsCard {Frequency=1600, Volume=1024, Architecture=GraphicsCardArchitecture.Maxwell1},
-                new GraphicsCard {Frequency=1850, Volume=4096, Architecture=GraphicsCardArchitecture.Pascal},
+                new GraphicsCard {Frequency=1800, Volume=2048},
+                new GraphicsCard {Frequency=1866, Volume=2048},
+                new GraphicsCard {Frequency=1600, Volume=1024},
+                new GraphicsCard {Frequency=1850, Volume=4096},
                 };
                 context.AddRange(cards);
 
@@ -60,11 +60,11 @@ namespace Workplace.Models
 
                 List<Processor> processors = new List<Processor>
                 {
-                    new Processor{Cores=4, Threads=4, Frequency=3000, Architecture=ProcessorArchitecture.CoffeeLake},
-                    new Processor{Cores=2, Threads=4, Frequency=2600, Architecture=ProcessorArchitecture.Haswell},
-                    new Processor{Cores=4, Threads=4, Frequency=3300, Architecture=ProcessorArchitecture.SandyLake},
-                    new Processor{Cores=8, Threads=8, Frequency=4200, Architecture=ProcessorArchitecture.SkyLake},
-                    new Processor{Cores=4, Threads=8, Frequency=3600, Architecture=ProcessorArchitecture.SkyLake},
+                    new Processor{Cores=4, Threads=4, Frequency=3000},
+                    new Processor{Cores=2, Threads=4, Frequency=2600},
+                    new Processor{Cores=4, Threads=4, Frequency=3300},
+                    new Processor{Cores=8, Threads=8, Frequency=4200},
+                    new Processor{Cores=4, Threads=8, Frequency=3600},
                 };
                 context.AddRange(processors);
 
@@ -88,6 +88,7 @@ namespace Workplace.Models
                     new Keyboard {ConnectType="USB", HasNumpad=true, Keys=100},
                     new Keyboard {ConnectType="Bluethooth", HasNumpad=false, Keys=87},
                     new Keyboard {ConnectType="PS/2", HasNumpad=true, Keys=105},
+                    new Keyboard {ConnectType="TESTER", HasNumpad=true, Keys=105},
                 };
                 context.AddRange(keyboards);
 
@@ -99,33 +100,37 @@ namespace Workplace.Models
                     new Mouse {ConnectType="Wireless"},
                     new Mouse {ConnectType="USB"},
                     new Mouse {ConnectType="Bluethooth"},
+                    new Mouse {ConnectType="TESTER"},
                 };
                 context.AddRange(mice);
 
-                List<Computer> computers = new List<Computer>
+                List<Monitor> monitors = new List<Monitor> //10
                 {
-                    new Computer {SystemUnit=systemUnits[0], Keyboard=keyboards[0], Mouse=mice[0]},
-                    new Computer {SystemUnit=systemUnits[1], Keyboard=keyboards[1], Mouse=mice[1] },
-                    new Computer {SystemUnit=systemUnits[2], Keyboard=keyboards[2], Mouse=mice[2] },
-                    new Computer {SystemUnit=systemUnits[3], Keyboard=keyboards[3], Mouse=mice[3] },
-                    new Computer {SystemUnit=systemUnits[4], Keyboard=keyboards[4], Mouse=mice[4] },
-                    new Computer {SystemUnit=systemUnits[5], Keyboard=keyboards[5], Mouse=mice[5] },
-                };
-                context.AddRange(computers);
-
-                List<Monitor> monitors = new List<Monitor>
-                {
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[0]},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[1]},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[2]},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[2]},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[3]},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[4]},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[4]},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[5]},
-                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768, Computer=computers[5]},
+                    new Monitor {Frequency=60, ResolutionX=1600, ResolutionY=900},
+                    new Monitor {Frequency=75, ResolutionX=1366, ResolutionY=768},
+                    new Monitor {Frequency=60, ResolutionX=1366, ResolutionY=768},
+                    new Monitor {Frequency=75, ResolutionX=1366, ResolutionY=768},
+                    new Monitor {Frequency=60, ResolutionX=1920, ResolutionY=1080},
+                    new Monitor {Frequency=75, ResolutionX=1920, ResolutionY=1080},
+                    new Monitor {Frequency=60, ResolutionX=1920, ResolutionY=1080},
+                    new Monitor {Frequency=75, ResolutionX=1366, ResolutionY=768},
+                    new Monitor {Frequency=75, ResolutionX=1920, ResolutionY=1080},
+                    new Monitor {Frequency=75, ResolutionX=1366, ResolutionY=768},
+                    new Monitor {Frequency=144, ResolutionX=1366, ResolutionY=768},
+                    new Monitor {Frequency=144, ResolutionX=1366, ResolutionY=768},
                 };
                 context.AddRange(monitors);
+
+                List<Computer> computers = new List<Computer>
+                {
+                    new Computer {SystemUnit=systemUnits[0], Keyboard=keyboards[0], Mouse=mice[0], Monitors={monitors[0], monitors[1] } },
+                    new Computer {SystemUnit=systemUnits[1], Keyboard=keyboards[1], Mouse=mice[1], Monitors={monitors[2], monitors[3] } },
+                    new Computer {SystemUnit=systemUnits[2], Keyboard=keyboards[2], Mouse=mice[2], Monitors={monitors[4] } },
+                    new Computer {SystemUnit=systemUnits[3], Keyboard=keyboards[3], Mouse=mice[3], Monitors={monitors[5], monitors[6] }},
+                    new Computer {SystemUnit=systemUnits[4], Keyboard=keyboards[4], Mouse=mice[4], Monitors={monitors[7], monitors[8] }},
+                    new Computer {SystemUnit=systemUnits[5], Keyboard=keyboards[5], Mouse=mice[5], Monitors={monitors[9] }},
+                };
+                context.AddRange(computers);
 
                 List<Workplace_> workplaces = new List<Workplace_>
                 {

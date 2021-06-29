@@ -22,70 +22,32 @@ namespace Workplace.Controllers
 
         // GET: api/Workplaces
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Object>>> GetWorkplaces()
+        public async Task<ActionResult<IEnumerable<Workplace_>>> GetWorkplaces()
         {
-            return await _context.Workplaces.Select(
-                w => new
-                {
-                    Id = w.Id,
-                    Computer = new  
-                    {
-                        Id = w.Computer.Id,
-                        SystemUnit = new
-                        {
-                            Id = w.Computer.SystemUnit.Id,
-                            Motherboard = w.Computer.SystemUnit.Motherboard,
-                            Processor = w.Computer.SystemUnit.Processor,
-                            Disk = w.Computer.SystemUnit.Disk,
-                            Memory = w.Computer.SystemUnit.Memory
-                        },
-                        Keyboard = w.Computer.Keyboard,
-                        Mouse = w.Computer.Mouse,
-                        Monitors = w.Computer.Monitors.Select(m => new
-                        {
-                            Id = m.Id,
-                            Frequency = m.Frequency,
-                            ResolutionX = m.ResolutionX,
-                            ResolutionY = m.ResolutionY
-                        }
-                        ).ToList()
-                   }
-                }
-                ).ToListAsync();
+            return await _context.Workplaces
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Motherboard)
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Processor)
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Memory)
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Disk)
+                .Include(w => w.Computer).ThenInclude(c => c.Keyboard)
+                .Include(w => w.Computer).ThenInclude(c => c.Mouse)
+                .Include(w => w.Computer).ThenInclude(c => c.Monitors)
+                .ToListAsync();
         }
 
         // GET: api/Workplaces/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Object>> GetWorkplace(int id)
+        public async Task<ActionResult<Workplace_>> GetWorkplace(int id)
         {
-            var workplace = await _context.Workplaces.Select(
-                w => new
-                {
-                    Id = w.Id,
-                    Computer = new
-                    {
-                        Id = w.Computer.Id,
-                        SystemUnit = new
-                        {
-                            Id = w.Computer.SystemUnit.Id,
-                            Motherboard = w.Computer.SystemUnit.Motherboard,
-                            Processor = w.Computer.SystemUnit.Processor,
-                            Disk = w.Computer.SystemUnit.Disk,
-                            Memory = w.Computer.SystemUnit.Memory
-                        },
-                        Keyboard = w.Computer.Keyboard,
-                        Mouse = w.Computer.Mouse,
-                        Monitors = w.Computer.Monitors.Select(m => new
-                        {
-                            Id = m.Id,
-                            Frequency = m.Frequency,
-                            ResolutionX = m.ResolutionX,
-                            ResolutionY = m.ResolutionY
-                        }
-                        ).ToList()
-                    }
-                }
-                ).FirstOrDefaultAsync(w => w.Id == id);
+            Workplace_ workplace = await _context.Workplaces
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Motherboard)
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Processor)
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Memory)
+                .Include(w => w.Computer).ThenInclude(c => c.SystemUnit).ThenInclude(su => su.Disk)
+                .Include(w => w.Computer).ThenInclude(c => c.Keyboard)
+                .Include(w => w.Computer).ThenInclude(c => c.Mouse)
+                .Include(w => w.Computer).ThenInclude(c => c.Monitors)
+                .FirstOrDefaultAsync(w => w.Id == id);
 
             if (workplace == null)
             {

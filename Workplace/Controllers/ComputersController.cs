@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Workplace.Models;
+using Workplace.DTOs;
 
 namespace Workplace.Controllers
 {
@@ -22,70 +23,31 @@ namespace Workplace.Controllers
 
         // GET: api/Computers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Object>>> GetComputers()
+        public async Task<ActionResult<IEnumerable<Computer>>> GetComputers()
         {
-            IEnumerable<Computer> computers = _context.Computers.Include(c => c.SystemUnit).Include(c => c.Monitors);
-           /* return await _context.Computers
-             .Include(c => c.SystemUnit.Disk)
-             .Include(c => c.SystemUnit.Motherboard)
-             .Include(c => c.SystemUnit.Processor)
-             .Include(c => c.SystemUnit.Memory)
-             .Include(c => c.Monitors)
-             .ToListAsync();*/
-
-            //ругается на циклическую зависимость
-            return await _context.Computers.Select(c => new 
-            {
-                Id = c.Id,
-                SystemUnit = new {
-                    Id = c.SystemUnit.Id,
-                    Motherboard = c.SystemUnit.Motherboard,
-                    Processor = c.SystemUnit.Processor,
-                    Disk = c.SystemUnit.Disk,
-                    Memory = c.SystemUnit.Memory
-                },
-                Keyboard = c.Keyboard,
-                Mouse = c.Mouse,
-                Monitors = c.Monitors.Select(m => new 
-                {
-                    Id = m.Id,
-                    Frequency = m.Frequency,
-                    ResolutionX = m.ResolutionX,
-                    ResolutionY = m.ResolutionY
-                }
-                    ).ToList()
-            }).ToListAsync();
-
+            return await _context.Computers
+                .Include(c => c.SystemUnit).ThenInclude(su => su.Disk)
+                .Include(c => c.SystemUnit).ThenInclude(su => su.Processor)
+                .Include(c => c.SystemUnit).ThenInclude(su => su.Motherboard)
+                .Include(c => c.SystemUnit).ThenInclude(su => su.Memory)
+                .Include(c => c.Mouse)
+                .Include(c => c.Keyboard)
+                .Include(c => c.Monitors)
+                .ToListAsync();
         }
 
         // GET: api/Computers/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Object>> GetComputer(int id)
+        public async Task<ActionResult<Computer>> GetComputer(int id)
         {
-            var computer = await _context.Computers.Select(
-                c => new 
-                {
-                    Id = c.Id,
-                    SystemUnit = new
-                    {
-                        Id = c.SystemUnit.Id,
-                        Motherboard = c.SystemUnit.Motherboard,
-                        Processor = c.SystemUnit.Processor,
-                        Disk = c.SystemUnit.Disk,
-                        Memory = c.SystemUnit.Memory
-                    },
-                    Keyboard = c.Keyboard,
-                    Mouse = c.Mouse,
-                    Monitors = c.Monitors.Select(m => new
-                    {
-                        Id = m.Id,
-                        Frequency = m.Frequency,
-                        ResolutionX = m.ResolutionX,
-                        ResolutionY = m.ResolutionY
-                    }
-                    ).ToList()
-                }
-                )
+            var computer = await _context.Computers
+                .Include(c => c.SystemUnit).ThenInclude(su => su.Disk)
+                .Include(c => c.SystemUnit).ThenInclude(su => su.Processor)
+                .Include(c => c.SystemUnit).ThenInclude(su => su.Motherboard)
+                .Include(c => c.SystemUnit).ThenInclude(su => su.Memory)
+                .Include(c => c.Mouse)
+                .Include(c => c.Keyboard)
+                .Include(c => c.Monitors)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (computer == null)
@@ -100,12 +62,37 @@ namespace Workplace.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutComputer(int id, Computer computer)
+        public async Task<IActionResult> PutComputer(int id, IncomingComputer incomingComputer)
         {
-            if (id != computer.Id)
+            if (id != incomingComputer.Id)
             {
                 return BadRequest();
             }
+
+            Computer computer = await _context.Computers.FindAsync(id);
+            if (computer == null)
+            {
+                return NotFound($"Computer with id {id} not found");
+            }
+
+            List<Monitor> monitors = new List<Monitor>();
+            foreach (int monitorId in incomingComputer.MonitorIds)
+            {
+                Monitor monitor = _context.Monitors.Find(monitorId);
+                if (monitor != null)
+                {
+                    monitors.Add(monitor);
+                }
+                else
+                {
+                    return NotFound($"Monitor with id {monitorId} not found");
+                }
+            }
+
+            computer.SystemUnitId = incomingComputer.SystemUnitId;
+            computer.KeyboardId = incomingComputer.KeyboardId;
+            computer.MouseId = incomingComputer.MouseId;
+            computer.Monitors = monitors;
 
             _context.Entry(computer).State = EntityState.Modified;
 
@@ -132,8 +119,30 @@ namespace Workplace.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Computer>> PostComputer(Computer computer)
+        public async Task<ActionResult<Computer>> PostComputer(IncomingComputer incomingComputer)
         {
+            List<Monitor> monitors = new List<Monitor>();
+            foreach (int monitorId in incomingComputer.MonitorIds)
+            {
+                Monitor monitor = _context.Monitors.Find(monitorId);
+                if (monitor != null)
+                {
+                    monitors.Add(monitor);
+                }
+                else
+                {
+                    return NotFound($"Monitor with id {monitorId} not found");
+                }
+            }
+
+            Computer computer = new Computer
+            {
+                SystemUnitId = incomingComputer.SystemUnitId,
+                MouseId = incomingComputer.MouseId,
+                KeyboardId = incomingComputer.KeyboardId,
+                Monitors = monitors
+            };
+
             _context.Computers.Add(computer);
             await _context.SaveChangesAsync();
 
